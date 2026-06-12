@@ -1,31 +1,25 @@
-# Astro Starter Kit: Minimal
+# Irfan Khattak | Lead Systems Engineer Portfolio
 
-```sh
-npm create astro@latest -- --template minimal
-```
+A high-performance, enterprise-grade developer portfolio engineered for maximum speed, seamless responsiveness, and visual impact.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🏗️ Architecture & Philosophy
 
-## 🚀 Project Structure
+This digital presence was built with a strict focus on performance and "Graceful Degradation." It delivers a heavy, premium visual experience on desktop while stripping down to an ultra-lean, 60fps scrolling experience on mobile processors.
 
-Inside of your Astro project, you'll see the following folders and files:
+* **Framework:** [Astro](https://astro.build/) (Static Site Generation for zero-JS baseline)
+* **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+* **Interactivity:** Vanilla TypeScript
+* **Animations:** Pure CSS Keyframes (Zero-dependency background telemetry grids)
+* **Deployment:** Vercel Global Edge Network
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## 🚀 Core Features
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+* **Glassmorphic UI:** High-contrast, deeply layered data cards with custom hover physics.
+* **Live Telemetry Simulations:** Interactive DOM elements mimicking Vertex AI audits and Q-Commerce unit economics.
+* **Infinite Tech Ticker:** A seamless CSS-only marquee showcasing core competencies.
+* **Performance First:** Heavy canvas/JS elements are strictly disabled on mobile viewports to preserve GPU rendering and battery life.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
+## 💻 Local Development
 
 All commands are run from the root of the project, from a terminal:
 
@@ -34,10 +28,11 @@ All commands are run from the root of the project, from a terminal:
 | `npm install`             | Installs dependencies                            |
 | `npm run dev`             | Starts local dev server at `localhost:4321`      |
 | `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## 🔗 Connect
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+* **Portfolio:** [Insert your Vercel domain here later]
+* **Email:** ifnkhattak@outlook.com
+
+---
+*All Systems Nominal. © 2026 Irfan Khattak*
