@@ -1,0 +1,190 @@
+---
+// src/components/NexusEconomics.astro
+---
+
+<div
+    class="my-12 p-4 md:p-6 rounded-xl border border-slate-800 bg-[#0a0f1a] shadow-2xl font-sans reveal-element opacity-0 translate-y-12 transition-all duration-1000 ease-out"
+>
+    <div class="flex items-center gap-2 border-b border-slate-800 pb-4 mb-8">
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"
+        ></span>
+        <h3 class="text-white font-bold tracking-tight">
+            Live Simulator: Q-Commerce Unit Economics
+        </h3>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div class="space-y-6">
+            <div>
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-slate-400">Average Order Value (PKR)</span
+                    >
+                    <span
+                        class="text-amber-400 font-mono font-bold"
+                        id="val-aov">1200</span
+                    >
+                </div>
+                <input
+                    type="range"
+                    id="slider-aov"
+                    min="500"
+                    max="3000"
+                    step="50"
+                    value="1200"
+                    class="w-full accent-amber-500"
+                />
+            </div>
+
+            <div>
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-slate-400">Rider Delivery Fee (PKR)</span>
+                    <span
+                        class="text-amber-400 font-mono font-bold"
+                        id="val-rider">150</span
+                    >
+                </div>
+                <input
+                    type="range"
+                    id="slider-rider"
+                    min="50"
+                    max="400"
+                    step="10"
+                    value="150"
+                    class="w-full accent-amber-500"
+                />
+            </div>
+
+            <div>
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-slate-400"
+                        >Fixed Store OPEX / Day (PKR)</span
+                    >
+                    <span
+                        class="text-amber-400 font-mono font-bold"
+                        id="val-opex">25000</span
+                    >
+                </div>
+                <input
+                    type="range"
+                    id="slider-opex"
+                    min="10000"
+                    max="50000"
+                    step="1000"
+                    value="25000"
+                    class="w-full accent-amber-500"
+                />
+            </div>
+        </div>
+
+        <div
+            class="bg-slate-900/50 border border-slate-800 rounded-lg p-4 md:p-6 flex flex-col justify-center space-y-5 md:space-y-6"
+        >
+            <div>
+                <p
+                    class="text-[10px] md:text-xs text-slate-500 uppercase tracking-wider mb-1"
+                >
+                    Blended Cost Per Order
+                </p>
+                <p
+                    class="text-2xl md:text-3xl font-mono text-rose-400"
+                    id="out-cpo"
+                >
+                    PKR 450
+                </p>
+            </div>
+            <div class="h-px w-full bg-slate-800"></div>
+            <div>
+                <p
+                    class="text-[10px] md:text-xs text-slate-500 uppercase tracking-wider mb-1"
+                >
+                    Daily Break-Even Volume
+                </p>
+                <p class="text-2xl md:text-3xl font-mono text-cyan-400">
+                    <span id="out-breakeven">84</span>
+                    <span class="text-xs md:text-sm text-slate-500"
+                        >orders/day</span
+                    >
+                </p>
+            </div>
+            <div class="h-px w-full bg-slate-800"></div>
+            <div>
+                <p
+                    class="text-[10px] md:text-xs text-slate-500 uppercase tracking-wider mb-1"
+                >
+                    Projected Daily Profit
+                </p>
+                <p
+                    class="text-2xl md:text-3xl font-mono text-emerald-400"
+                    id="out-profit"
+                >
+                    PKR 35,000
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const sliderAov = document.getElementById("slider-aov") as HTMLInputElement;
+    const sliderRider = document.getElementById(
+        "slider-rider",
+    ) as HTMLInputElement;
+    const sliderOpex = document.getElementById(
+        "slider-opex",
+    ) as HTMLInputElement;
+
+    const valAov = document.getElementById("val-aov");
+    const valRider = document.getElementById("val-rider");
+    const valOpex = document.getElementById("val-opex");
+
+    const outCpo = document.getElementById("out-cpo");
+    const outBreakeven = document.getElementById("out-breakeven");
+    const outProfit = document.getElementById("out-profit");
+
+    function calculateEconomics() {
+        const aov = parseFloat(sliderAov.value);
+        const riderFee = parseFloat(sliderRider.value);
+        const opex = parseFloat(sliderOpex.value);
+
+        // Update Labels
+        if (valAov) valAov.innerText = aov.toString();
+        if (valRider) valRider.innerText = riderFee.toString();
+        if (valOpex) valOpex.innerText = opex.toString();
+
+        // Math Logic: COGS is estimated at 25% of AOV
+        const cogs = aov * 0.25;
+        const costPerOrder = cogs + riderFee;
+        const grossMarginPerOrder = aov - costPerOrder;
+
+        let breakEven = 0;
+        if (grossMarginPerOrder > 0) {
+            breakEven = Math.ceil(opex / grossMarginPerOrder);
+        } else {
+            breakEven = Infinity; // Infinite orders needed if margin is negative
+        }
+
+        const dailyProfit = grossMarginPerOrder * 200 - opex;
+
+        // Update UI
+        if (outCpo) outCpo.innerText = `PKR ${costPerOrder.toLocaleString()}`;
+        if (outBreakeven)
+            outBreakeven.innerText =
+                breakEven === Infinity ? "ERR" : breakEven.toLocaleString();
+
+        if (outProfit) {
+            outProfit.innerText = `PKR ${dailyProfit.toLocaleString()}`;
+            outProfit.className =
+                dailyProfit >= 0
+                    ? "text-3xl font-mono text-emerald-400"
+                    : "text-3xl font-mono text-rose-400";
+        }
+    }
+
+    // Attach event listeners
+    [sliderAov, sliderRider, sliderOpex].forEach((slider) => {
+        if (slider) slider.addEventListener("input", calculateEconomics);
+    });
+
+    // Initial calculation on load
+    calculateEconomics();
+</script>

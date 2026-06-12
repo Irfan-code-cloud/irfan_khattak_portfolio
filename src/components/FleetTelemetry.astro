@@ -1,0 +1,125 @@
+---
+// src/components/FleetTelemetry.astro
+---
+
+<div
+    class="my-12 p-4 md:p-6 rounded-xl border border-slate-800 bg-[#0a0f1a] shadow-2xl font-sans reveal-element opacity-0 translate-y-12 transition-all duration-1000 ease-out"
+>
+    <div
+        class="flex flex-col md:flex-row items-start md:items-center gap-3 justify-between border-b border-slate-800 pb-4 mb-6"
+    >
+        <div class="flex items-center gap-2">
+            <span
+                class="w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse mt-0.5 shrink-0"
+            ></span>
+            <h3
+                class="text-white font-bold tracking-tight text-sm md:text-base"
+            >
+                Live Telemetry: Vertex AI Financial Audit
+            </h3>
+        </div>
+        <span class="text-[10px] md:text-xs font-mono text-slate-500"
+            >Node: us-central1-a</span
+        >
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="space-y-6">
+            <div>
+                <div class="flex justify-between text-xs mb-2">
+                    <span class="text-slate-400"
+                        >Standard Routing (Fuel Cost)</span
+                    >
+                    <span class="text-slate-300 font-mono">PKR 145,000</span>
+                </div>
+                <div class="w-full bg-slate-900 rounded-full h-1.5">
+                    <div
+                        class="bg-rose-500/80 h-1.5 rounded-full"
+                        style="width: 100%"
+                    >
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="flex justify-between text-xs mb-2">
+                    <span class="text-slate-400"
+                        >OR-Tools Optimized (Fuel Cost)</span
+                    >
+                    <span class="text-emerald-400 font-mono font-bold"
+                        >PKR 82,400</span
+                    >
+                </div>
+                <div
+                    class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden relative"
+                >
+                    <div
+                        class="bg-emerald-500 h-1.5 rounded-full origin-left transition-transform duration-1000 ease-out transform scale-x-0"
+                        id="bar-optimized"
+                    >
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="flex justify-between text-xs mb-2">
+                    <span class="text-slate-400">Fleet Utilization</span>
+                    <span class="text-cyan-400 font-mono">94.2%</span>
+                </div>
+                <div
+                    class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden"
+                >
+                    <div
+                        class="bg-cyan-500 h-1.5 rounded-full origin-left transition-transform duration-1000 delay-300 ease-out transform scale-x-0"
+                        id="bar-utilization"
+                    >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="bg-slate-900/50 border border-slate-800 rounded-lg p-4 font-mono text-xs text-slate-400 flex flex-col justify-end overflow-hidden h-[160px]"
+            id="audit-log"
+        >
+        </div>
+    </div>
+</div>
+
+<script>
+    // Trigger chart animations after component loads
+    setTimeout(() => {
+        const barOpt = document.getElementById("bar-optimized");
+        const barUtil = document.getElementById("bar-utilization");
+        if (barOpt) barOpt.style.transform = "scaleX(0.568)"; // Represents 82.4k / 145k
+        if (barUtil) barUtil.style.transform = "scaleX(0.942)"; // Represents 94.2%
+    }, 400);
+
+    // Simulate Vertex AI data logging
+    const logs = [
+        "Initializing Google OR-Tools engine...",
+        "Fetching OSRM distance matrix (142 nodes)...",
+        "Calculating CVRPTW constraints...",
+        "Optimized paths generated. Vertex AI audit starting...",
+        "<span class='text-emerald-400 font-bold'>[AUDIT] Projected daily savings: PKR 62,600</span>",
+    ];
+
+    const logContainer = document.getElementById("audit-log");
+    let delay = 0;
+
+    if (logContainer) {
+        logs.forEach((log, index) => {
+            setTimeout(
+                () => {
+                    const div = document.createElement("div");
+                    div.innerHTML = `> ${log}`;
+                    div.className =
+                        "mt-1.5 opacity-0 transition-opacity duration-500";
+                    logContainer.appendChild(div);
+
+                    // Trigger browser reflow to allow the opacity transition to play
+                    void div.offsetWidth;
+                    div.classList.remove("opacity-0");
+                },
+                (delay += index === logs.length - 1 ? 1400 : 800),
+            ); // Longer pause before the final audit result
+        });
+    }
+</script>

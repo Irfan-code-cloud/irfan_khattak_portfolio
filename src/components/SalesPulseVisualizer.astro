@@ -1,0 +1,178 @@
+---
+// src/components/SalesPulseVisualizer.astro
+---
+
+<div
+    class="my-12 p-4 md:p-6 rounded-xl border border-slate-800 bg-[#0a0f1a] shadow-2xl font-sans reveal-element opacity-0 translate-y-12 transition-all duration-1000 ease-out"
+>
+    <div
+        class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-6"
+    >
+        <div class="flex items-center gap-2 shrink-0">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"
+            ></span>
+            <h3
+                class="text-sm md:text-base text-white font-bold tracking-tight"
+            >
+                SalesPulse: Live Data Engine
+            </h3>
+        </div>
+        <div class="flex flex-wrap gap-2 w-full md:w-auto">
+            <button
+                id="btn-revenue"
+                class="chart-btn active flex-1 md:flex-none px-3 py-1 text-xs font-semibold rounded bg-rose-500/20 text-rose-400 border border-rose-500/50 transition-all"
+                >Revenue</button
+            >
+            <button
+                id="btn-users"
+                class="chart-btn flex-1 md:flex-none px-3 py-1 text-xs font-semibold rounded bg-slate-800/50 text-slate-400 border border-slate-700 hover:bg-slate-800 hover:text-slate-300 transition-all"
+                >Users</button
+            >
+            <button
+                id="btn-products"
+                class="chart-btn flex-1 md:flex-none px-3 py-1 text-xs font-semibold rounded bg-slate-800/50 text-slate-400 border border-slate-700 hover:bg-slate-800 hover:text-slate-300 transition-all"
+                >Products</button
+            >
+        </div>
+    </div>
+    <div
+        class="relative h-[250px] w-full border-b border-l border-slate-800 flex items-end justify-between px-4 pb-0 pt-8"
+    >
+        <div
+            class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20"
+        >
+            <div class="w-full border-b border-slate-700 border-dashed"></div>
+            <div class="w-full border-b border-slate-700 border-dashed"></div>
+            <div class="w-full border-b border-slate-700 border-dashed"></div>
+            <div class="w-full border-b border-slate-700 border-dashed"></div>
+        </div>
+
+        <div
+            class="chart-bar w-10 md:w-16 bg-gradient-to-t from-rose-900/40 to-rose-500 rounded-t-md transition-all duration-700 ease-out flex justify-center items-start pt-2"
+            style="height: 40%;"
+        >
+            <span
+                class="text-[10px] font-mono text-white opacity-0 group-hover:opacity-100"
+                >JAN</span
+            >
+        </div>
+        <div
+            class="chart-bar w-10 md:w-16 bg-gradient-to-t from-rose-900/40 to-rose-500 rounded-t-md transition-all duration-700 ease-out flex justify-center items-start pt-2 delay-75"
+            style="height: 65%;"
+        >
+            <span
+                class="text-[10px] font-mono text-white opacity-0 group-hover:opacity-100"
+                >FEB</span
+            >
+        </div>
+        <div
+            class="chart-bar w-10 md:w-16 bg-gradient-to-t from-rose-900/40 to-rose-500 rounded-t-md transition-all duration-700 ease-out flex justify-center items-start pt-2 delay-100"
+            style="height: 45%;"
+        >
+            <span
+                class="text-[10px] font-mono text-white opacity-0 group-hover:opacity-100"
+                >MAR</span
+            >
+        </div>
+        <div
+            class="chart-bar w-10 md:w-16 bg-gradient-to-t from-rose-900/40 to-rose-500 rounded-t-md transition-all duration-700 ease-out flex justify-center items-start pt-2 delay-150"
+            style="height: 80%;"
+        >
+            <span
+                class="text-[10px] font-mono text-white opacity-0 group-hover:opacity-100"
+                >APR</span
+            >
+        </div>
+        <div
+            class="chart-bar w-10 md:w-16 bg-gradient-to-t from-rose-900/40 to-rose-500 rounded-t-md transition-all duration-700 ease-out flex justify-center items-start pt-2 delay-200"
+            style="height: 95%;"
+        >
+            <span
+                class="text-[10px] font-mono text-white opacity-0 group-hover:opacity-100"
+                >MAY</span
+            >
+        </div>
+        <div
+            class="chart-bar w-10 md:w-16 bg-gradient-to-t from-rose-900/40 to-rose-500 rounded-t-md transition-all duration-700 ease-out flex justify-center items-start pt-2 delay-300"
+            style="height: 60%;"
+        >
+            <span
+                class="text-[10px] font-mono text-white opacity-0 group-hover:opacity-100"
+                >JUN</span
+            >
+        </div>
+    </div>
+    <div
+        class="flex justify-between px-4 mt-2 text-xs font-mono text-slate-500"
+    >
+        <span>Q1</span>
+        <span>Q2</span>
+    </div>
+</div>
+
+<script>
+    // The Data Sets (Percentages of total height)
+    const dataSets = {
+        revenue: [40, 65, 45, 80, 95, 60],
+        users: [20, 35, 55, 70, 85, 100],
+        products: [80, 75, 60, 45, 65, 90],
+    };
+
+    // The Color Themes
+    const themes = {
+        revenue: "from-rose-900/40 to-rose-500",
+        users: "from-blue-900/40 to-blue-500",
+        products: "from-amber-900/40 to-amber-500",
+    };
+
+    const bars = document.querySelectorAll(".chart-bar");
+    const buttons = document.querySelectorAll(".chart-btn");
+
+    function updateChart(type: "revenue" | "users" | "products") {
+        const data = dataSets[type];
+        const theme = themes[type];
+
+        // Update Button Styles
+        buttons.forEach((btn) => {
+            // Reset all buttons to inactive styling
+            btn.className =
+                "chart-btn px-3 py-1 text-xs font-semibold rounded bg-slate-800/50 text-slate-400 border border-slate-700 hover:bg-slate-800 hover:text-slate-300 transition-all";
+        });
+
+        // Set Active Button styling based on type
+        const activeBtn = document.getElementById(`btn-${type}`);
+        if (activeBtn) {
+            if (type === "revenue")
+                activeBtn.className =
+                    "chart-btn active px-3 py-1 text-xs font-semibold rounded bg-rose-500/20 text-rose-400 border border-rose-500/50 transition-all";
+            if (type === "users")
+                activeBtn.className =
+                    "chart-btn active px-3 py-1 text-xs font-semibold rounded bg-blue-500/20 text-blue-400 border border-blue-500/50 transition-all";
+            if (type === "products")
+                activeBtn.className =
+                    "chart-btn active px-3 py-1 text-xs font-semibold rounded bg-amber-500/20 text-amber-400 border border-amber-500/50 transition-all";
+        }
+
+        // Animate Bars
+        bars.forEach((bar, index) => {
+            const el = bar as HTMLElement;
+
+            // Update Height
+            el.style.height = `${data[index]}%`;
+
+            // Update Gradient Colors
+            el.className = `chart-bar w-10 md:w-16 bg-gradient-to-t ${theme} rounded-t-md transition-all duration-700 ease-out flex justify-center items-start pt-2 delay-${index * 75}`;
+        });
+    }
+
+    // Attach Event Listeners
+    document
+        .getElementById("btn-revenue")
+        ?.addEventListener("click", () => updateChart("revenue"));
+    document
+        .getElementById("btn-users")
+        ?.addEventListener("click", () => updateChart("users"));
+    document
+        .getElementById("btn-products")
+        ?.addEventListener("click", () => updateChart("products"));
+</script>

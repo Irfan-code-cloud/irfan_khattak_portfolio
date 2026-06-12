@@ -1,0 +1,62 @@
+---
+// src/components/BentoCard.astro
+interface Props {
+  title: string;
+  className?: string;
+  href?: string;
+  imageUrl?: string;
+  backText?: string; // Keeping this prop so it doesn't break your index.astro, even if we don't display it
+}
+
+const { title, className = "", href, imageUrl } = Astro.props;
+const Element = href ? "a" : "div";
+---
+
+<Element
+  href={href}
+  class={`group relative flex flex-col overflow-hidden rounded-2xl bg-[#0a0f1a] border border-slate-800 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_15px_40px_-10px_rgba(34,211,238,0.2)] hover:border-cyan-500/30 w-full h-full ${className}`}
+>
+  {
+    imageUrl && (
+      <div class="relative h-48 w-full overflow-hidden border-b border-slate-800">
+        <div class="absolute inset-0 bg-slate-900/40 z-10 group-hover:bg-transparent transition-colors duration-500" />
+        <img
+          src={imageUrl}
+          alt={title}
+          class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out opacity-80 group-hover:opacity-100"
+        />
+      </div>
+    )
+  }
+
+  <div class="flex flex-col flex-1 p-6 lg:p-8 relative z-20">
+    <div class="flex justify-between items-start mb-4">
+      <h3
+        class="text-xl font-medium text-slate-100 tracking-tight group-hover:text-cyan-400 transition-colors duration-300"
+      >
+        {title}
+      </h3>
+
+      <div
+        class="w-8 h-8 rounded-full bg-slate-800/50 flex items-center justify-center border border-slate-700 group-hover:bg-cyan-500/10 group-hover:border-cyan-500/30 transition-all duration-300 shrink-0 ml-4"
+      >
+        <svg
+          class="w-4 h-4 text-slate-400 group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-transform duration-300"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+        </svg>
+      </div>
+    </div>
+
+    <div class="flex-1 flex flex-col">
+      <slot />
+    </div>
+  </div>
+</Element>

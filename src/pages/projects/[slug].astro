@@ -1,0 +1,218 @@
+---
+// src/pages/projects/[slug].astro
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Terminal from "../../components/Terminal.astro";
+import FleetTelemetry from "../../components/FleetTelemetry.astro";
+import NexusEconomics from "../../components/NexusEconomics.astro";
+import SalesPulseVisualizer from "../../components/SalesPulseVisualizer.astro";
+
+export async function getStaticPaths() {
+  const projectEntries = await getCollection("projects");
+  return projectEntries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description}>
+  <article class="max-w-7xl mx-auto py-10 px-4 relative z-10">
+    
+    <!-- 1. Animated Back Button -->
+    <div class="animate-fade-in-up">
+      <a 
+        href="/#projects" 
+        class="group inline-flex items-center gap-3 px-4 py-2 rounded-full bg-slate-900/50 border border-slate-800 hover:border-cyan-500/30 hover:bg-slate-800/50 transition-all duration-300 mb-10 w-fit backdrop-blur-sm"
+      >
+        <svg 
+          class="w-4 h-4 text-slate-500 group-hover:text-cyan-400 group-hover:-translate-x-1 transition-all duration-300" 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        <span class="text-[11px] font-mono uppercase tracking-[0.2em] text-slate-400 group-hover:text-cyan-400 transition-colors mt-[1px]">
+          Command Center
+        </span>
+      </a>
+    </div>
+
+    <!-- 2. Fixed "g" cutoff (pb-2) & Animated Title -->
+   <h1
+      class="text-2xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent pb-2 animate-fade-in-up [text-wrap:balance] leading-tight"
+      style="animation-delay: 100ms;
+animation-fill-mode: both;"
+    >
+      {entry.data.title}
+    </h1>
+
+    <!-- 3. Animated Tags and Buttons Container -->
+    <div class="flex flex-col gap-6 mb-12 border-b border-slate-800/60 pb-8 animate-fade-in-up" style="animation-delay: 200ms; animation-fill-mode: both;">
+      <div class="flex flex-wrap gap-2">
+        {
+          entry.data.tags.map((tag: string) => {
+            const t = tag.toLowerCase();
+            let icon = null;
+            let colorTheme = "bg-slate-900/80 text-slate-300 border-slate-800"; // Default styling
+            
+            // Dynamic Brand Matching
+            if (t.includes("python")) {
+              colorTheme = "bg-blue-500/10 text-blue-400 border-blue-500/20";
+              icon = "python/60a5fa"; // Tailwind blue-400 hex
+            } else if (t.includes("fastapi")) {
+              colorTheme = "bg-teal-500/10 text-teal-400 border-teal-500/20";
+              icon = "fastapi/2dd4bf"; // Tailwind teal-400 hex
+            } else if (t.includes("flutter")) {
+              colorTheme = "bg-sky-500/10 text-sky-400 border-sky-500/20";
+              icon = "flutter/38bdf8"; // Tailwind sky-400 hex
+            } else if (t.includes("vertex") || t.includes("gcp")) {
+              colorTheme = "bg-rose-500/10 text-rose-400 border-rose-500/20";
+              icon = "googlecloud/fb7185"; // Tailwind rose-400 hex
+            } else if (t.includes("react")) {
+              colorTheme = "bg-cyan-500/10 text-cyan-400 border-cyan-500/20";
+              icon = "react/22d3ee"; // Tailwind cyan-400 hex
+            } else if (t.includes("node")) {
+              colorTheme = "bg-green-500/10 text-green-400 border-green-500/20";
+              icon = "nodedotjs/4ade80"; // Tailwind green-400 hex
+            }
+
+            return (
+              <span class={`flex items-center gap-2 text-xs font-mono px-3 py-1.5 rounded-full border transition-colors hover:bg-opacity-20 cursor-default ${colorTheme}`}>
+                {icon ? (
+                  // Fetches pure SVG from SimpleIcons CDN colored to our exact Tailwind hex!
+                  <img src={`https://cdn.simpleicons.org/${icon}`} alt={`${tag} logo`} class="w-3.5 h-3.5" />
+                ) : (
+                  // Elegant fallback SVG for non-brand tags like "Machine Learning"
+                  <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                  </svg>
+                )}
+                {tag}
+              </span>
+            )
+          })
+        }
+      </div>
+
+     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-4 w-full">
+        {
+          entry.data.liveUrl && (
+            <a
+              href={entry.data.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-center w-full sm:w-auto gap-2 px-5 py-3 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 hover:border-cyan-400/60 transition-all font-semibold text-sm shadow-[0_0_15px_rgba(34,211,238,0.1)] hover:shadow-[0_0_25px_rgba(34,211,238,0.2)]"
+            >
+              <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              <!-- DYNAMIC TEXT TRICK: Looks for buttonText in markdown, defaults to 'Live Link' -->
+              {entry.id === 'ciro' ? 'Download App (APK)' : 'Live Link'}
+            </a>
+          )
+        }
+         {
+          entry.data.githubUrl && (
+            <a
+              href={entry.data.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-center w-full sm:w-auto gap-2 px-5 py-3 rounded-lg bg-slate-800/50 text-slate-300 border border-slate-700 hover:bg-slate-700/80 hover:text-white transition-all font-semibold text-sm shadow-lg"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                class="w-4 h-4 fill-current"
+                aria-hidden="true"
+              >
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+              GitHub Repository
+            </a>
+          )
+        }
+      </div>
+    </div>
+
+    <!-- The Markdown Body -->
+    <div class="markdown-content text-slate-300">
+      <Content />
+    </div>
+
+    <!-- 4. Terminal / Custom Components Animation Wrapper -->
+    <div class="mt-8">
+      {entry.id === "ciro" && <Terminal />}
+      {entry.id === "fleet-optimizer" && <FleetTelemetry />}
+      {entry.id === "nexus-point" && <NexusEconomics />}
+      {entry.id === "salespulse" && <SalesPulseVisualizer />}
+    </div>
+  </article>
+</BaseLayout>
+
+<script>
+  // High-performance Intersection Observer for scroll animations
+  document.addEventListener("DOMContentLoaded", () => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.15, // Triggers when 15% of the element is visible
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Remove the hidden/shifted states
+          entry.target.classList.remove("opacity-0", "translate-y-12");
+          // Add the visible/anchored states
+          entry.target.classList.add("opacity-100", "translate-y-0");
+          // Stop observing once revealed to maintain performance
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Grab all elements we marked for revealing
+    const elementsToReveal = document.querySelectorAll(".reveal-element");
+    elementsToReveal.forEach((el) => observer.observe(el));
+  });
+</script>
+
+<style is:global>
+  @reference "../../styles/global.css";
+
+  /* Updated Keyframes for Premium Header Animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(48px); /* Matches Tailwind's translate-y-12 perfectly */
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-in-up {
+    /* Increased to 1 full second with a much smoother ease-out curve */
+    animation: fadeInUp 1s cubic-bezier(0, 0, 0.2, 1); 
+  }
+
+  .markdown-content h3 {
+    @apply text-2xl font-normal text-white mt-12 mb-4 tracking-tight;
+  }
+  .markdown-content p {
+    /* Matches the Home page's translucent optical illusion */
+    @apply mb-6 text-white/70 tracking-wide leading-relaxed font-extralight;
+  }
+  .markdown-content ul {
+    @apply list-disc list-outside ml-5 mb-8 space-y-2 text-white/70 tracking-wide leading-relaxed font-extralight;
+  }
+  .markdown-content strong {
+    /* Mutes the harsh cyan to a premium white */
+    @apply text-white font-normal tracking-wide;
+  }
+  .markdown-content img {
+    @apply rounded-xl border border-slate-800 shadow-2xl my-8 w-full object-cover;
+  }
+</style>

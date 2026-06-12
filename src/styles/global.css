@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        /* Plus Jakarta Sans for a premium, clean SaaS aesthetic */
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+}
+
+@layer utilities {
+    @keyframes orbit {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes counter-orbit {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(-360deg);
+        }
+    }
+
+    /* Custom sharp blink for the terminal cursor */
+    @keyframes terminal-blink {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0;
+        }
+    }
+
+    .animate-orbit {
+        animation: orbit 25s linear infinite;
+    }
+
+    .animate-counter-orbit {
+        animation: counter-orbit 25s linear infinite;
+    }
+
+    .animate-terminal-blink {
+        animation: terminal-blink 1s step-end infinite;
+    }
+}
+
+/* Marquee */
+@keyframes marquee {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.animate-marquee {
+    animation: marquee 35s linear infinite;
+}
+
+/* Animation Grid flow on bigger screen like desktop */
+@keyframes grid-flow {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(4rem);
+    }
+}
+
+.animate-grid-flow {
+    animation: grid-flow 3s linear infinite;
+}
