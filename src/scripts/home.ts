@@ -28,7 +28,9 @@ function typeWriter() {
 
     setTimeout(typeWriter, typeSpeed);
 }
-setTimeout(typeWriter, 400);
+window.addEventListener("load", () => {
+    setTimeout(typeWriter, 400);
+});
 
 // 2. Terminal Boot Sequence Logic
 const termContainer = document.getElementById(
