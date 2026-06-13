@@ -1,10 +1,12 @@
 ---
 // src/components/BentoCard.astro
+import { Image } from "astro:assets";
+
 interface Props {
   title: string;
   className?: string;
   href?: string;
-  imageUrl?: string;
+  imageUrl?: any;
   backText?: string; // Keeping this prop so it doesn't break your index.astro, even if we don't display it
 }
 
@@ -20,9 +22,11 @@ const Element = href ? "a" : "div";
     imageUrl && (
       <div class="relative h-48 w-full overflow-hidden border-b border-slate-800">
         <div class="absolute inset-0 bg-slate-900/40 z-10 group-hover:bg-transparent transition-colors duration-500" />
-        <img
+        <Image
           src={imageUrl}
           alt={title}
+          width={600}
+          height={300}
           class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out opacity-80 group-hover:opacity-100"
         />
       </div>

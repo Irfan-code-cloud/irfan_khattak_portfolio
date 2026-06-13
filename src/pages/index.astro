@@ -2,6 +2,13 @@
 // src/pages/index.astro
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BentoCard from "../components/BentoCard.astro";
+import { Image } from "astro:assets";
+import profileImg from "../assets/profile.jpeg";
+// Project Images
+import ciroImg from "../assets/Images/ciro/user.png";
+import fleetImg from "../assets/Images/fleet/Map_rerouting.png";
+import nexusImg from "../assets/Images/nexus/store.png";
+import salesPulseImg from "../assets/Images/salespulse/main-dashboard.png";
 ---
 
 <BaseLayout title="Home">
@@ -107,8 +114,8 @@ import BentoCard from "../components/BentoCard.astro";
 				<div
 					class="aspect-[4/5] rounded-3xl overflow-hidden border border-slate-700/50 shadow-2xl relative z-10 group"
 				>
-					<img
-						src="/profile.jpeg"
+					<Image
+						src={profileImg}
 						alt="Irfan Khattak"
 						class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
 					/>
@@ -1028,7 +1035,7 @@ import BentoCard from "../components/BentoCard.astro";
 				<BentoCard
 					title="CIRO (Crisis Intelligence Platform)"
 					href="/projects/ciro"
-					imageUrl="/Images/ciro/user.png"
+					imageUrl={ciroImg}
 					backText="Explore the live multi-agent tactical telemetry maps."
 				>
 					<p
@@ -1066,7 +1073,7 @@ import BentoCard from "../components/BentoCard.astro";
 				<BentoCard
 					title="Karachi Fleet Optimizer"
 					href="/projects/fleet-optimizer"
-					imageUrl="/Images/fleet/Map_rerouting.png"
+					imageUrl={fleetImg}
 					backText="Analyze mathematically optimized routing efficiency and capital recovery."
 				>
 					<p
@@ -1103,7 +1110,7 @@ import BentoCard from "../components/BentoCard.astro";
 				<BentoCard
 					title="Nexus Point"
 					href="/projects/nexus-point"
-					imageUrl="/Images/nexus/store.PNG"
+					imageUrl={nexusImg}
 					backText="Interact with real-time unit economics and machine learning forecasts."
 				>
 					<p
@@ -1132,7 +1139,7 @@ import BentoCard from "../components/BentoCard.astro";
 				<BentoCard
 					title="SalesPulse Analytics"
 					href="/projects/salespulse"
-					imageUrl="/Images/salespulse/main-dashboard.png"
+					imageUrl={salesPulseImg}
 					backText="Monitor high-velocity product trends and organizational data streams."
 				>
 					<p
