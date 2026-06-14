@@ -31,7 +31,7 @@ All commands are run from the root of the project, from a terminal:
 
 ## 🔗 Connect
 
-* **Portfolio:** [Insert your Vercel domain here later]
+* **Linkedin:** [Connect with me on LinkedIn](www.linkedin.com/in/irfan-khattak-00b847251)
 * **Email:** ifnkhattak@outlook.com
 
 ---
