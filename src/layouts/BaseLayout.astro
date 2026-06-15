@@ -20,6 +20,20 @@ const { title, description = "Full Stack & AI Systems Engineer Portfolio" } =
     <meta name="generator" content={Astro.generator} />
     <title>Irfan Khattak | Full-Stack Developer</title>
     <meta name="description" content={description} />
+    <!-- Google tag (gtag.js) -->
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-B6W09Y5HF6"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-B6W09Y5HF6");
+    </script>
   </head>
   <body
     class="min-h-screen flex flex-col antialiased relative selection:bg-cyan-500/30 selection:text-cyan-200 overflow-x-hidden overflow-y-scroll"
