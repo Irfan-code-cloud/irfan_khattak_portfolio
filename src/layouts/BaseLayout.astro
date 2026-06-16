@@ -7,8 +7,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "Full Stack & AI Systems Engineer Portfolio" } =
-  Astro.props;
+const { title, description = "Full Stack & AI Systems Engineer" } = Astro.props;
 ---
 
 <!doctype html>
@@ -16,11 +15,27 @@ const { title, description = "Full Stack & AI Systems Engineer Portfolio" } =
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/jpeg" href="/favicon.jpeg" />
+    <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
     <meta name="generator" content={Astro.generator} />
+
     <title>Irfan Khattak | Full-Stack Developer</title>
     <meta name="description" content={description} />
-    <!-- Google tag (gtag.js) -->
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.irfankhattak.com/" />
+    <meta property="og:site_name" content="Irfan Khattak" />
+    <meta property="og:title" content="Irfan Khattak | Full-Stack Developer" />
+    <meta property="og:description" content={description} />
+
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Irfan Khattak",
+        "url": "https://www.irfankhattak.com/"
+      }
+    </script>
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-B6W09Y5HF6"
     ></script>
     <script>
