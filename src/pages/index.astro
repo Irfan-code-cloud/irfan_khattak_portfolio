@@ -108,11 +108,18 @@ import salesPulseImg from "../assets/Images/salespulse/main-dashboard.png";
 			</div>
 
 			<!-- Right Column: The Visuals & Orbit -->
+			<!-- Right Column: The Visuals & Orbit -->
 			<div
-				class="relative w-full max-w-[180px] sm:max-w-[260px] md:max-w-[280px] lg:max-w-[360px] 2xl:max-w-[480px] mx-auto opacity-0 translate-y-12 transition-all duration-[800ms] delay-200 ease-out scroll-reveal shrink-0"
+				class="relative w-full max-w-[180px] sm:max-w-[260px] md:max-w-[280px] lg:max-w-[360px] 2xl:max-w-[480px] mx-auto opacity-0 translate-y-12 transition-all duration-[800ms] delay-200 ease-out scroll-reveal shrink-0 group"
 			>
+				<!-- The Ambient Image Glow (Static) -->
 				<div
-					class="aspect-[4/5] rounded-3xl overflow-hidden border border-slate-700/50 shadow-2xl relative z-10 group"
+					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] aspect-square bg-cyan-500/30 rounded-full blur-[100px] pointer-events-none -z-10"
+				>
+				</div>
+
+				<div
+					class="aspect-[4/5] rounded-3xl overflow-hidden border border-slate-700/50 shadow-2xl relative z-10"
 				>
 					<Image
 						src={profileImg}
