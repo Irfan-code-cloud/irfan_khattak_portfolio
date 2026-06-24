@@ -7,7 +7,10 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "Full Stack & AI Systems Engineer" } = Astro.props;
+const {
+  title,
+  description = "Lead Backend & AI Orchestration Engineer specializing in Python, FastAPI, Google Cloud Platform, and autonomous multi-agent workflows. Seeking remote opportunities.",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -18,22 +21,42 @@ const { title, description = "Full Stack & AI Systems Engineer" } = Astro.props;
     <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
     <meta name="generator" content={Astro.generator} />
 
-    <title>Irfan Khattak | Full-Stack Developer</title>
+    <title>Irfan Khattak | Backend Architecture & AI Systems Engineer</title>
     <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="Backend Engineer, AI Orchestration, Python Developer, FastAPI, GCP, Remote Systems Engineer, Vertex AI, React, Astro"
+    />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.irfankhattak.com/" />
     <meta property="og:site_name" content="Irfan Khattak" />
-    <meta property="og:title" content="Irfan Khattak | Full-Stack Developer" />
+    <meta
+      property="og:title"
+      content="Irfan Khattak | Backend Architecture & AI Systems Engineer"
+    />
     <meta property="og:description" content={description} />
     <link rel="canonical" href="https://www.irfankhattak.com/" />
 
     <script type="application/ld+json" is:inline>
       {
         "@context": "https://schema.org",
-        "@type": "WebSite",
+        "@type": "Person",
         "name": "Irfan Khattak",
-        "url": "https://www.irfankhattak.com/"
+        "url": "https://www.irfankhattak.com/",
+        "jobTitle": "Lead Systems Engineer",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent Architecture"
+        },
+        "knowsAbout": [
+          "Python Backend Architecture",
+          "FastAPI",
+          "Google Cloud Platform (GCP)",
+          "Vertex AI Orchestration",
+          "Multi-Agent Systems",
+          "Data Pipelines"
+        ]
       }
     </script>
 
